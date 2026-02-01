@@ -1,13 +1,13 @@
 provider "aws" {
-  region  = "eu-central-1"
-  profile = "private"
+  region  = var.aws_region
+  profile = var.aws_profile
   allowed_account_ids = ["066355930280"]
 }
 
 terraform {
   required_providers {
     helm = {
-      source = "opentofu/helm"
+      source = "hashicorp/helm"
       version = "3.1.1"
     }
   }
@@ -33,7 +33,7 @@ terraform {
   backend "s3" {
     bucket         = "tofu-backend-066355930280"
     key            = "ray-k8s-playground/main.tfstate"
-    region         = "eu-central-1"
-    profile        = "private"
+    region         = var.aws_region
+    profile        = var.aws_profile
   }
 }

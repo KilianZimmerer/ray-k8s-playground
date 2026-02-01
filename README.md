@@ -1,7 +1,7 @@
 # ray-k8s-playground
 A playground for deploying Ray on Kubernetes (kind) using OpenTofu.
 
-## Setup AWS Infrastructure and KubeRay
+## Setup AWS Infrastructure and KubeRay-Operator
 
 You need to have aws-cli, kubectl, tofu installed.
 
@@ -15,30 +15,17 @@ aws configure
 
 ### Deploy KubeRay via EKS
 
-Deploy K8s-Cluster with
+Deploy K8s-Cluster and Kuberay-Operator with your specific variables
 
 ```bash
 cd infrastructure
 tofu init
-tofu apply
+tofu apply -var="aws_profile=default" -var="aws_region=eu-central-1"
 ```
 
-### Generate kubeconfig
-
-```bash
-aws eks update-kubeconfig --region eu-central-1 --name ray-k8s-playground
-```
-
-and test:
+and test kuberay-operator setup
 
 ```bash
 kubectl get nodes
+kubectl get all -n kuberay-system
 ```
-
-### Forward Kuberay GUI
-
-```bash
-kubectl port-forward service/ray-cluster-tiny-kuberay-head-svc 8265:8265
-```
-
-And open GUI at `http://localhost:8265/`

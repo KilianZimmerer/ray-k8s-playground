@@ -5,41 +5,22 @@ resource "helm_release" "kuberay_operator" {
   namespace        = "kuberay-system"
   create_namespace = true
   version          = "1.5.1"
+
+depends_on = [ null_resource.update_kubeconfig, module.eks ]
 }
 
-resource "helm_release" "ray_cluster" {
-  name       = "ray-cluster-tiny"
-  repository = "https://ray-project.github.io/kuberay-helm/"
-  chart      = "ray-cluster"
-  namespace  = "default"
-  version    = "1.5.1"
+resource "null_resource" "update_kubeconfig" {
+  depends_on = [module.eks]
 
-  depends_on = [helm_release.kuberay_operator]
+  triggers = {
+    endpoint = module.eks.cluster_endpoint
+  }
 
-  set = [
-    {
-      name  = "head.rayStartParams.num-cpus"
-      value = "1"
-    },
-    {
-      name  = "head.resources.limits.cpu"
-      value = "1"
-    },
-    {
-      name  = "head.resources.limits.memory"
-      value = "2Gi"
-    },
-    {
-      name  = "worker.replicas"
-      value = "1"
-    },
-    {
-      name  = "worker.resources.limits.cpu"
-      value = "1"
-    },
-    {
-      name  = "worker.resources.limits.memory"
-      value = "2Gi"
+  provisioner "local-exec" {
+    environment = {
+      AWS_PROFILE = var.aws_profile
     }
-  ]
+
+    command = "aws eks update-kubeconfig --region ${var.aws_region} --name ${module.eks.cluster_name}"
+  }
 }
