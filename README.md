@@ -20,7 +20,7 @@ Deploy K8s-Cluster and Kuberay-Operator with your specific variables
 ```bash
 cd infrastructure
 tofu init
-tofu apply -var="aws_profile=default" -var="aws_region=eu-central-1"
+tofu apply -var="aws_profile=default" -var="aws_region=eu-central-1" -var="aws_account_id=YOUR_ACCOUNT_ID"
 ```
 
 and test kuberay-operator setup

@@ -9,3 +9,8 @@ variable "aws_region" {
     description = "AWS region to deploy resources."
     default     = "eu-central-1"
 }
+
+variable "aws_account_id" {
+    type        = string
+    description = "AWS account ID to deploy resources."
+}

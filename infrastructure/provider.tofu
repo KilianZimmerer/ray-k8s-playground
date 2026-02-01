@@ -1,7 +1,7 @@
 provider "aws" {
   region  = var.aws_region
   profile = var.aws_profile
-  allowed_account_ids = ["066355930280"]
+  allowed_account_ids = [var.aws_account_id]
 }
 
 terraform {
@@ -31,7 +31,7 @@ locals {
 
 terraform {
   backend "s3" {
-    bucket         = "tofu-backend-066355930280"
+    bucket         = "tofu-backend-${var.aws_account_id}"
     key            = "ray-k8s-playground/main.tfstate"
     region         = var.aws_region
     profile        = var.aws_profile
