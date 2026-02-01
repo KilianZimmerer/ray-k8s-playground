@@ -27,5 +27,5 @@ and test kuberay-operator setup
 
 ```bash
 kubectl get nodes
-kubectl get all -n kuberay-system
+kubectl get pods -n kuberay-system
 ```
