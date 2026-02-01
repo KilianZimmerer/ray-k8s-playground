@@ -4,6 +4,21 @@ provider "aws" {
   allowed_account_ids = ["066355930280"]
 }
 
+terraform {
+  required_providers {
+    helm = {
+      source = "opentofu/helm"
+      version = "3.1.1"
+    }
+  }
+}
+
+provider "helm" {
+  kubernetes = {
+    config_path = "~/.kube/config"
+  }
+}
+
 data "aws_availability_zones" "available" {
   state = "available"
 }
