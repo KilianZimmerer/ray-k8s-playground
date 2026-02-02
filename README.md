@@ -1,5 +1,5 @@
 # ray-k8s-playground
-A playground for deploying Ray on Kubernetes (kind) using OpenTofu.
+A playground for deploying Ray on Kubernetes (EKS) using OpenTofu.
 
 ## Setup AWS Infrastructure and KubeRay-Operator
 
